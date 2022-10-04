@@ -1,0 +1,26 @@
+{
+  "name": "shorty-url",
+  "version": "0.1.1",
+  "description": "",
+  "engines": {
+    "node": "14.18.1"
+  },
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Pervin Pashazade",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "nodemon": "^2.0.19",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
