@@ -1,22 +1,26 @@
-import express from "express";
-import bodyParser from "body-parser";
-import dotenv from "dotenv";
-import cors from "cors";
-import db from "./src/DAL/models/index.cjs"
+const express = require("express");
+const bodyParser = require("body-parser");
+const dotenv = require("dotenv");
+const cors = require("cors");
+const db = require("./src/DAL/models/index.js");
 
-// const { db } = require("./src/DAL/models/index.cjs");
 dotenv.config();
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(cors({
     origin: "*"
 }));
 
-await db.sequelize.sync({ alter: true }).then(() => {
+// @sequelize-sync
+db.sequelize.sync({ alter: true }).then(() => {
     console.log("sequelize resync database")
 });
+
+// @routes
 
 app.get('/', (req, res) => {
     res.send('Hello world!')
