@@ -1,25 +1,25 @@
 'use strict';
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Links', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      fullname: {
+      long_url: {
         type: Sequelize.TEXT,
-        allowNull: false,
-      },
-      username: {
-        type: Sequelize.STRING(16),
         allowNull: false,
         unique: true,
       },
-      password: {
-        type: Sequelize.STRING,
+      link: {
+        type: Sequelize.TEXT,
         allowNull: false,
+      },
+      bit_id: {
+        allowNull: false,
+        type: Sequelize.TEXT
       },
       created_at: {
         allowNull: false,
@@ -33,9 +33,9 @@ module.exports = {
         type: Sequelize.DATE
       }
     });
-    await queryInterface.sequelize.query("ALTER TABLE users AUTO_INCREMENT = 1000000;");
+    await queryInterface.sequelize.query("ALTER TABLE links AUTO_INCREMENT = 1000000;");
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Links');
   }
 };

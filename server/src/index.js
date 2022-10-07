@@ -2,14 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const db = require("./src/DAL/models/index.js");
+const db = require("./DAL/models/index.js");
+const { PORT } = require("../config.js");
 
 dotenv.config();
 
 const app = express();
 
 app.use(bodyParser.json());
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(cors({
     origin: "*"
@@ -21,12 +22,12 @@ app.use(cors({
 // });
 
 // @routes
-const authRoutes = require("./src/Core/routes/auth")
+const shortlinksRoutes = require("./Core/routes/shorterlinks");
 
-app.use("/api/v1/auth", authRoutes)
+app.use("/api/v1/shortlinks", shortlinksRoutes)
 
 app.get('/', (req, res) => {
-    res.send('Hello world!')
+    res.send(`Hello world! ${PORT}`)
 });
 
-app.listen(process.env.PORT || 5000, () => console.log('Server okey'));
+app.listen(PORT, () => console.log(`Server okey => PORT: ${PORT}`));

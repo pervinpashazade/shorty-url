@@ -1,11 +1,11 @@
 'use strict';
 const { Model } = require('sequelize');
 const { timestamp_config } = require("../../../config.js")
-const PROTECTED_ATTRIBUTES = [
-  'password'
-];
+
+const PROTECTED_ATTRIBUTES = [];
+
 module.exports = (sequelize, DataTypes) => {
-  class User extends Model {
+  class Link extends Model {
     toJSON() {
       // hide protected fields
       const attributes = { ...this.get() };
@@ -24,36 +24,26 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  User.init({
-    fullname: {
+  Link.init({
+    long_url: {
       type: DataTypes.TEXT,
       allowNull: {
         args: false,
-        msg: 'Please enter your fullname',
-      },
-      validate: {
-        len: [3, 50]
+        msg: 'Please enter URL to shorter',
       },
     },
-    username: {
-      type: DataTypes.STRING,
+    link: {
+      type: DataTypes.TEXT,
       allowNull: {
         args: false,
-        msg: 'Please enter your username',
-      },
-      unique: {
-        args: true,
-        msg: 'Username already exists',
-      },
-      validate: {
-        len: [6, 16]
+        msg: 'Please enter URL',
       },
     },
-    password: {
-      type: DataTypes.STRING,
+    bit_id: {
+      type: DataTypes.TEXT,
       allowNull: {
         args: false,
-        msg: 'Please enter your password',
+        msg: 'Please enter bitly id',
       },
     },
     deleted_at: {
@@ -62,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     ...timestamp_config,
     sequelize,
-    modelName: 'User',
+    modelName: 'Link',
   });
-  return User;
+  return Link;
 };
