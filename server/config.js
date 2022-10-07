@@ -2,6 +2,7 @@ const sequelize = require("sequelize");
 require('dotenv').config();
 
 module.exports = {
+    PORT: 5000,
     sequelize_config: new sequelize(
         process.env.DB_NAME,
         process.env.DB_USER,
