@@ -15,7 +15,7 @@ axios.interceptors.response.use(
     return response;
   }, error => {
 
-    console.log('interceptor', error);
+    console.log('interceptor', error?.response);
 
     if (!error?.response) {
 
@@ -42,11 +42,11 @@ axios.interceptors.response.use(
     } else if (error.response.status === 500) {
       toast.error(
         <div>
-          Oh, no! {error.response.data.error.message}
+          Oh, no! {error.response.data.message}
         </div>
       )
 
-      // return Promise.reject(error)
+      return Promise.reject(error)
     }
 
     return new Promise((resolve) => {

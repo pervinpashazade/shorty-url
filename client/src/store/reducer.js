@@ -1,9 +1,5 @@
 import { actionTypes } from './action';
 
-const insertSkuState = {
-    optionList: [],
-}
-
 export const initialState = {
     isAuth: !!localStorage.getItem('shorty-url-user'),
     app_theme: 0,
@@ -13,7 +9,7 @@ export const initialState = {
     }
 };
 
-export default (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
     switch (action.type) {
 
         case actionTypes.LOGIN:
@@ -75,3 +71,5 @@ export default (state = initialState, action) => {
             return state
     }
 }
+
+export default reducer

@@ -1,10 +1,3 @@
-import axios from "axios";
-import {
-    config,
-    // staticDataUrls,
-    // localStorageKeys
-} from "../config";
-
 export const actionTypes = {
     LOGIN: 'LOGIN',
     LOGOUT: 'LOGOUT',
