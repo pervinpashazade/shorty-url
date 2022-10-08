@@ -1,0 +1,143 @@
+{
+	"info": {
+		"_postman_id": "a8f18e50-e175-46b7-8dd9-20045d83e53d",
+		"name": "shorty-url",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "7926588"
+	},
+	"item": [
+		{
+			"name": "v1",
+			"item": [
+				{
+					"name": "Links",
+					"item": [
+						{
+							"name": "Create short link",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"url\": \"https://reactjs.org/\",\r\n    \"provider\": \"tinyurl\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:5000/api/v1/shortlinks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "5000",
+									"path": [
+										"api",
+										"v1",
+										"shortlinks"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test",
+					"item": [
+						{
+							"name": "Bit.ly",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "691bc081a32f96568f21377d61b99fcbfbe9dcc2",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"group_guid\": \"Bma5hDq3ELt\",\r\n    \"domain\": \"bit.ly\",\r\n    \"long_url\": \"https://www.facebook.com/pervin.pashazade\"\r\n} ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api-ssl.bitly.com/v4/shorten",
+									"protocol": "https",
+									"host": [
+										"api-ssl",
+										"bitly",
+										"com"
+									],
+									"path": [
+										"v4",
+										"shorten"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "TinyURL",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "YPjIXXUYp9MWbz6MF7fA49vouRHWndyiJ9knQSFgMMZCxhvmlNuHoAnpHyV7",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"url\": \"https://github.com/pervinpashazade\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://api.tinyurl.com/create",
+									"protocol": "https",
+									"host": [
+										"api",
+										"tinyurl",
+										"com"
+									],
+									"path": [
+										"create"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "{{token}}",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
+		}
+	]
+}
