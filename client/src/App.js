@@ -84,7 +84,6 @@ const App = () => {
         }
       })
       .catch(err => {
-
         if (err.response?.status === 400) {
           toast.update(id, {
             render: `Opps, ${err.response?.data?.message}`,
@@ -106,6 +105,7 @@ const App = () => {
             type: "error",
             ...toastConfig,
           })
+          dispatch(changeValue('isLoading', 'action', false))
         }
       }).finally(() => dispatch(changeValue('isLoading', 'action', false)))
   }
