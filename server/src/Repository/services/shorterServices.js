@@ -46,16 +46,35 @@ const createUrl = async body => {
     };
 
     try {
-        let existData = await getByLongName(body.url);
+        let selected_provider = config.providers.bitly;
+
+        if (body.provider) {
+            for (const key of Object.keys(config.providers)) {
+                if (key === body.provider) {
+                    selected_provider = config.providers[key]
+                }
+            }
+        }
+
+        let existData = await getByLongName(body.url, selected_provider.domain);
 
         if (existData) {
             result.set(true, 200, "Success", null, existData)
             return result;
         }
 
-        let selected_provider = config.providers.bitly;
+        let post_body = {
+            group_guid: selected_provider.group_guid,
+            domain: selected_provider.domain,
+            long_url: body.url
+        };
 
-        if (body.provider && config.providers[body.provider]) selected_provider = config.providers[body.provider];
+        if (selected_provider.domain === "tinyurl.com") {
+            post_body = {
+                url: body.url,
+                provider: selected_provider.domain
+            }
+        }
 
         const response_data = await axios({
             method: "POST",
@@ -65,13 +84,9 @@ const createUrl = async body => {
             headers: {
                 'Authorization': `Bearer ${selected_provider.access_token}`
             },
-            data: {
-                group_guid: selected_provider.group_guid,
-                domain: selected_provider.domain,
-                long_url: body.url
-            },
+            data: post_body,
         }).then(res => {
-            console.log('RES ===>', res);
+            console.log('RES ===>', res.data);
             return res.data
         }).catch(async err => {
             console.log('ERR ===>', err.response.data);
@@ -86,11 +101,23 @@ const createUrl = async body => {
             isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED
         })
 
-        const newData = await Link.create({
-            long_url: response_data.long_url,
-            link: response_data.link,
-            bit_id: response_data.id,
-        }, {
+        let obj = {};
+
+        if (selected_provider.domain === "bit.ly") {
+            obj = {
+                long_url: response_data.long_url,
+                link: response_data.link,
+                provider: selected_provider.domain,
+            }
+        } else if (selected_provider.domain === "tinyurl.com") {
+            obj = {
+                long_url: response_data.data.url,
+                link: response_data.data.tiny_url,
+                provider: response_data.data.domain,
+            }
+        }
+
+        const newData = await Link.create(obj, {
             transaction: transaction
         }).then(response => {
             return response.get({ plain: true })
@@ -119,10 +146,10 @@ const createUrl = async body => {
     return result;
 };
 
-const getByLongName = async url => {
+const getByLongName = async (url, provider_name) => {
     if (!url) return null;
     try {
-        const data = await Link.findOne({ where: { [Op.or]: [{ long_url: url }] }, raw: true });
+        const data = await Link.findOne({ where: { [Op.or]: [{ long_url: url, provider: provider_name }] }, raw: true });
         if (!data) return null;
         return data
     } catch (error) {
