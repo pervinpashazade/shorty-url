@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,900&display=swap&subset=cyrillic");
 body {
-  background: #f5f5f5;
+  background: #0250c5;
   font-family: "Montserrat", sans-serif;
   font-size: 15px;
 }
@@ -37,7 +37,7 @@ a:focus {
 }
 
 hr {
-  background: #233044;
+  background: #0450c4;
 }
 
 ul {
@@ -109,6 +109,10 @@ ul li {
   cursor: pointer;
 }
 
+.bg-primary {
+  background: #0450c4 !important;
+}
+
 input.ios-switch-btn {
   opacity: 0;
   position: absolute;
@@ -137,7 +141,7 @@ input.ios-switch-btn + label::before {
   top: 0;
   left: 0;
   border-radius: 30px;
-  background-color: rgba(35, 48, 68, 0.168627451);
+  background-color: #d33f8d;
 }
 input.ios-switch-btn + label:after {
   content: "";
@@ -153,25 +157,59 @@ input.ios-switch-btn + label:after {
   border-radius: 60px;
 }
 input.ios-switch-btn:checked + label:before {
-  background: #2ecc71;
+  background: #0450c4;
   transition: width 0.2s cubic-bezier(0, 0, 0, 0.1);
 }
 input.ios-switch-btn:checked + label:after {
   left: 24px;
 }
 
-.app-wrapper {
+.validation-errors {
+  margin-top: 0.5rem;
+}
+.validation-errors span {
+  display: block;
+  color: #d33f8d;
+}
+
+.app-container {
   width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   padding: 15px;
   background: #0250c5;
   background: -webkit-linear-gradient(bottom, #0250c5, #d43f8d);
 }
 
-.test {
-  color: red;
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: #fff;
+  border-radius: 0.25rem;
+}
+.wrapper .box {
+  width: 100%;
+  padding: 1.5rem;
+}
+.wrapper .box.detail-wrapper h1 {
+  text-align: center;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+.wrapper .box.detail-wrapper p {
+  text-align: center;
+}
+@media only screen and (min-width: 768px) {
+  .wrapper {
+    flex-direction: row;
+  }
+  .wrapper .detail-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
 }/*# sourceMappingURL=style.css.map */

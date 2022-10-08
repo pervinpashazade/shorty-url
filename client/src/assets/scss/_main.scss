@@ -1,7 +1,9 @@
 .app-container {
   width: 100%;
   min-height: 100vh;
+  display: flex;
   align-items: center;
+  justify-content: center;
   padding: 15px;
   background: #0250c5;
   background: $primary-gradient;
@@ -29,7 +31,16 @@
         text-align: center;
       }
     }
+  }
 
-    &.form-wrapper {}
+  @media only screen and (min-width: 768px) {
+    flex-direction: row;
+
+    .detail-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
   }
 }
