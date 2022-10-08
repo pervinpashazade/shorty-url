@@ -1,15 +1,8 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap&subset=cyrillic");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700,900&display=swap&subset=cyrillic");
 
-$border-color: #d7dde2;
-
-$primary: #233044;
-$danger: #fb6565;
-$sidebar-color: #fff;
-$sidebar-alink: #2ecc71;
-$sidebar-amenu: #2c3e50;
-$sidebar-width: 240px;
-$outer-border: 0;
+$primary-color: #0450c4;
+$secondary-color: #d33f8d;
+$primary-gradient: -webkit-linear-gradient(bottom, #0250c5, #d43f8d);
 
 @import "reset";
 @import "loader";

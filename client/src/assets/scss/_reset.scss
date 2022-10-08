@@ -1,6 +1,6 @@
 body {
-  background: #f5f5f5;
-  font-family: "Roboto", sans-serif;
+  background: #0250c5;
+  font-family: 'Montserrat', sans-serif;
   font-size: 15px;
 
   @media only screen and (max-width: 575px) {
@@ -35,7 +35,7 @@ a:focus {
 }
 
 hr {
-  background: $primary;
+  background: $primary-color;
 }
 
 ul {
@@ -45,48 +45,5 @@ ul {
 
   li {
     display: inline-block;
-  }
-}
-
-.react-bootstrap-table {
-  min-height: 230px;
-}
-
-table {
-  thead {
-    tr {
-      th {
-        &.sortable {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
-
-.modal-content {
-  border-radius: 8px !important;
-
-  .modal-header {
-    border-bottom: none;
-  }
-
-  .modal-footer {
-    border-top: none;
-  }
-}
-
-.dropdown-menu {
-  font-size: 14px !important;
-
-  .dropdown-item {
-    padding: 0.25rem 0.75rem;
-    font-weight: 500;
-    cursor: pointer;
-  }
-
-  .dropdown-item:hover {
-    background-color: #ecc94e !important;
-    outline-color: transparent;
   }
 }
