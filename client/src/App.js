@@ -84,21 +84,35 @@ const App = () => {
         }
       })
       .catch(err => {
-        toast.update(id, {
-          render: "Opps, not completed!",
-          type: "error",
-          ...toastConfig,
-        })
-        if (err.response?.status === 422) {
+
+        if (err.response?.status === 400) {
+          toast.update(id, {
+            render: `Opps, ${err.response?.data?.message}`,
+            type: "error",
+            ...toastConfig,
+          })
+        } else if (err.response?.status === 422) {
           setValidationErrors({
             url: err.response.data.error.url ? err.response.data.error.username : [],
           });
+          toast.update(id, {
+            render: "Opps, not completed!",
+            type: "error",
+            ...toastConfig,
+          })
+        } else {
+          toast.update(id, {
+            render: "Sorry, error ocoured!",
+            type: "error",
+            ...toastConfig,
+          })
         }
       }).finally(() => dispatch(changeValue('isLoading', 'action', false)))
   }
 
   const resetState = () => {
     setData(null)
+    setSwitchStatus(false)
     formRef.current.reset();
   }
 
