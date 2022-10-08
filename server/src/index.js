@@ -2,7 +2,6 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const dotenv = require("dotenv");
 const cors = require("cors");
-const db = require("./DAL/models/index.js");
 const { PORT } = require("../config.js");
 
 dotenv.config();

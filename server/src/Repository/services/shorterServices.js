@@ -1,12 +1,7 @@
-const model = require("../../DAL/models");
-const { Op } = require("sequelize");
-const db = require("../../DAL/models");
 const { ResponseDTO } = require("../../DTO/ResponseDTO");
 const { normalizeObj } = require("../helpers/normalizeObj");
 const axios = require("axios");
 const config = require("../../../config");
-
-const { Link, Sequelize, sequelize } = model;
 
 const createUrl = async body => {
 
@@ -51,13 +46,6 @@ const createUrl = async body => {
             }
         }
 
-        let existData = await getByLongName(body.url, selected_provider.domain);
-
-        if (existData) {
-            result.set(true, 200, "Success", null, existData)
-            return result;
-        }
-
         let post_body = {
             group_guid: selected_provider.group_guid,
             domain: selected_provider.domain,
@@ -92,10 +80,6 @@ const createUrl = async body => {
             return result
         }
 
-        const transaction = await sequelize.transaction({
-            isolationLevel: Sequelize.Transaction.ISOLATION_LEVELS.READ_UNCOMMITTED
-        })
-
         let obj = {};
 
         if (selected_provider.domain === "bit.ly") {
@@ -110,15 +94,6 @@ const createUrl = async body => {
                 link: response_data.data.tiny_url,
                 provider: response_data.data.domain,
             }
-        }
-
-        const newData = await recordToDatabase(obj, transaction);
-
-        if (!newData) {
-            // await transaction.rollback();
-            // return result;
-        } else {
-            await transaction.commit();
         }
 
         result.set(true, 201, "URL created successfully", null, {
@@ -139,44 +114,6 @@ const createUrl = async body => {
 
     return result;
 };
-
-const getByLongName = async (url, provider_name) => {
-    if (!url) return null;
-    try {
-        const data = await Link.findOne({ where: { [Op.and]: [{ long_url: url, provider: provider_name }] }, raw: true });
-        if (!data) return null;
-        return data
-    } catch (error) {
-        console.log('getByLongName service catch', error);
-        return null
-    }
-}
-
-const recordToDatabase = async (obj, transaction) => {
-    if (!obj) return null;
-    try {
-        const data = await Link.create(obj, {
-            transaction: transaction
-        }).then(response => {
-            return response.get({ plain: true })
-        }).catch(err => {
-            console.log('recordToDatabase link create db_insert_error', err);
-        });
-
-        if (!data) return null;
-        return data
-    } catch (error) {
-        console.log('***');
-        console.log('***');
-        console.log('***');
-        console.log('recordToDatabase service catch', error);
-        console.log('***');
-        console.log('***');
-        console.log('***');
-
-        return null
-    }
-}
 
 module.exports = {
     createUrl: createUrl,
