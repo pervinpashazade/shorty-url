@@ -2,6 +2,10 @@
   cursor: pointer;
 }
 
+.bg-primary {
+  background: $primary-color !important;
+}
+
 // // ios switch btn
 input {
   &.ios-switch-btn {
@@ -29,7 +33,7 @@ input {
         top: 0;
         left: 0;
         border-radius: 30px;
-        background-color: #2330442b;
+        background-color: $secondary-color;
       }
 
       &:after {
@@ -50,7 +54,7 @@ input {
     // When Active
     &:checked {
       &+label:before {
-        background: #2ecc71; // Active Color
+        background: $primary-color; // Active Color
         transition: width .2s cubic-bezier(0, 0, 0, .1);
       }
 
@@ -58,5 +62,14 @@ input {
         left: 54px - 30px;
       }
     }
+  }
+}
+
+.validation-errors {
+  margin-top: .5rem;
+
+  span {
+    display: block;
+    color: $secondary-color;
   }
 }
