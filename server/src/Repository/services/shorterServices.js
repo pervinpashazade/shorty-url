@@ -24,14 +24,9 @@ const createUrl = async body => {
     };
 
     // 422
-    // // url regex required
     if (!body.url?.trim()) {
         validationErrors.url.push("This field is required");
     };
-    // // check here provider type only string allowed
-    // if (body.provider?.trim()) {
-    //     validationErrors.provider.push("Surname field is required");
-    // };
 
     let errorCount = 0;
 
@@ -149,7 +144,8 @@ const createUrl = async body => {
 const getByLongName = async (url, provider_name) => {
     if (!url) return null;
     try {
-        const data = await Link.findOne({ where: { [Op.or]: [{ long_url: url, provider: provider_name }] }, raw: true });
+        const data = await Link.findOne({ where: { [Op.and]: [{ long_url: url, provider: provider_name }] }, raw: true });
+
         if (!data) return null;
         return data
     } catch (error) {
