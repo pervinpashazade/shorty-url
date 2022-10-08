@@ -8,7 +8,7 @@ import {
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
-import { config, toast_config } from './config';
+import { config } from './config';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeValue } from './store/action';
 import Loader from "./components/Lib/Loader";
@@ -30,7 +30,7 @@ const App = () => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if(data) setData(null)
+    if (data) setData(null)
 
     const form = new FormData(e.target);
     let formData = {};
@@ -68,7 +68,6 @@ const App = () => {
       theme: 'dark'
     }
 
-
     axios.post(config.apiURL + 'api/v1/shortlinks', {
       url: formData.url,
       provider: !switchStatus ? "bitly" : "tinyurl"
@@ -81,7 +80,7 @@ const App = () => {
             type: "success",
             ...toastConfig,
           })
-          formRef.current.reset();
+          // formRef.current.reset();
         }
       })
       .catch(err => {
@@ -100,6 +99,7 @@ const App = () => {
 
   const resetState = () => {
     setData(null)
+    formRef.current.reset();
   }
 
   return (
