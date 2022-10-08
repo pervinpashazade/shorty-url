@@ -1,6 +1,6 @@
 const model = require("../../DAL/models");
 const { Op } = require("sequelize");
-// const db = require("../../DAL/models");
+const db = require("../../DAL/models");
 const { ResponseDTO } = require("../../DTO/ResponseDTO");
 const { normalizeObj } = require("../helpers/normalizeObj");
 const axios = require("axios");
@@ -112,29 +112,28 @@ const createUrl = async body => {
             }
         }
 
-        const newData = await Link.create(obj, {
-            transaction: transaction
-        }).then(response => {
-            return response.get({ plain: true })
-        }).catch(err => {
-            console.log('link create db_insert_error', err);
-            result.set(false, 400, "URL not created. Insert error", err)
-        });
+        const newData = await recordToDatabase(obj, transaction);
 
         if (!newData) {
-            await transaction.rollback();
-            return result;
+            // await transaction.rollback();
+            // return result;
+        } else {
+            await transaction.commit();
         }
 
-        await transaction.commit();
-
         result.set(true, 201, "URL created successfully", null, {
-            long_url: newData.long_url,
-            link: newData.link
+            long_url: obj.long_url,
+            link: obj.link
         })
 
     } catch (error) {
         console.log('link create error', error);
+
+        if (error.name === "SequelizeConnectionRefusedError") {
+            result.set(false, 500, "Could not connect to database!", error)
+            return result
+        }
+
         result.set(false, 500, "Something went wrong!", error)
     }
 
@@ -145,11 +144,37 @@ const getByLongName = async (url, provider_name) => {
     if (!url) return null;
     try {
         const data = await Link.findOne({ where: { [Op.and]: [{ long_url: url, provider: provider_name }] }, raw: true });
-
         if (!data) return null;
         return data
     } catch (error) {
         console.log('getByLongName service catch', error);
+        return null
+    }
+}
+
+const recordToDatabase = async (obj, transaction) => {
+    if (!obj) return null;
+    try {
+        const data = await Link.create(obj, {
+            transaction: transaction
+        }).then(response => {
+            return response.get({ plain: true })
+        }).catch(err => {
+            console.log('recordToDatabase link create db_insert_error', err);
+        });
+
+        if (!data) return null;
+        return data
+    } catch (error) {
+        console.log('***');
+        console.log('***');
+        console.log('***');
+        console.log('recordToDatabase service catch', error);
+        console.log('***');
+        console.log('***');
+        console.log('***');
+
+        return null
     }
 }
 
