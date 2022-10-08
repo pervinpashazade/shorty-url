@@ -25,7 +25,7 @@ module.exports = {
             group_guid: process.env.BITLY_GROUP_GUID,
             url: 'https://api-ssl.bitly.com/v4/shorten'
         },
-        tinyur: {
+        tinyurl: {
             domain: "tinyurl.com",
             access_token: process.env.TINY_URL_TOKEN,
             url: "https://api.tinyurl.com/create"

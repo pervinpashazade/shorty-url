@@ -11,13 +11,12 @@ module.exports = {
       long_url: {
         type: Sequelize.TEXT,
         allowNull: false,
-        unique: true,
       },
       link: {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      bit_id: {
+      provider: {
         allowNull: false,
         type: Sequelize.TEXT
       },

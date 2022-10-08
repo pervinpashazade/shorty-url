@@ -39,11 +39,11 @@ module.exports = (sequelize, DataTypes) => {
         msg: 'Please enter URL',
       },
     },
-    bit_id: {
+    provider: {
       type: DataTypes.TEXT,
       allowNull: {
         args: false,
-        msg: 'Please enter bitly id',
+        msg: 'Please enter provider',
       },
     },
     deleted_at: {
