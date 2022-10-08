@@ -42,7 +42,7 @@ axios.interceptors.response.use(
       //     </p>
       //   </div>), { position: "top-right", duration: 3000 });
 
-      toast.error("ERROR")
+      // toast.error("ERROR")
 
       return Promise.reject(error)
     }
