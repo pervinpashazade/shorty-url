@@ -12,7 +12,7 @@ import { config } from './config';
 import { useSelector, useDispatch } from 'react-redux';
 import { changeValue } from './store/action';
 import Loader from "./components/Lib/Loader";
-import { HashRouter, Link } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 const App = () => {
 
@@ -83,7 +83,7 @@ const App = () => {
           // formRef.current.reset();
         }
       })
-      .catch(err => {
+      .catch((err) => {
         if (err.response?.status === 400) {
           toast.update(id, {
             render: `Opps, ${err.response?.data?.message}`,
@@ -212,6 +212,7 @@ const App = () => {
                               <a
                                 href={data.url}
                                 target="_blank"
+                                rel="noreferrer"
                                 className="ml-1"
                               >
                                 {data.url}
@@ -222,6 +223,7 @@ const App = () => {
                               <a
                                 href={data.link}
                                 target="_blank"
+                                rel="noreferrer"
                                 className="ml-1 font-weight-bold"
                               >
                                 {data.link}
