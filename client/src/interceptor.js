@@ -14,34 +14,24 @@ axios.interceptors.response.use(
   response => {
     return response;
   }, error => {
+
+    console.log('interceptor', error);
+
     if (!error?.response) {
 
-      // toast.error("ERROR")
-
+      toast.error("Oh, no! Could not connect to server",)
+      return
       // return Promise.reject(error);
     }
     else if (error.response.status === 400) {
 
       console.log('error.response.data', error.response.data);
 
-      // toast.notify(({ onClose }) => (
-      //   <div className="alert alert-danger m-3">
-      //     <h5>Xəta baş verdi!</h5>
-      //     <p className="mb-0">
-      //       {
-      //         error.response.data.message ? error.response.data.message : '.'
-      //       }
-      //     </p>
-      //   </div>), { position: "top-right", duration: 3000 });
-
       // toast.error("ERROR")
 
       return Promise.reject(error)
     }
     else if (error.response.status === 422) {
-
-      console.log('test', error.response.data.error.url[0]);
-
       toast.error(
         <div>
           {error.response.data.error.url[0]}
@@ -49,6 +39,14 @@ axios.interceptors.response.use(
       )
 
       return Promise.reject(error)
+    } else if (error.response.status === 500) {
+      toast.error(
+        <div>
+          Oh, no! {error.response.data.error.message}
+        </div>
+      )
+
+      // return Promise.reject(error)
     }
 
     return new Promise((resolve) => {
