@@ -71,7 +71,7 @@ const App = () => {
 
     axios.post(config.apiURL + 'api/v1/shortlinks', {
       url: formData.url,
-      provider: !switchStatus ? "bit.ly" : "TinyURL"
+      provider: !switchStatus ? "bitly" : "tinyurl"
     })
       .then(res => {
         if (res.data.success) {
